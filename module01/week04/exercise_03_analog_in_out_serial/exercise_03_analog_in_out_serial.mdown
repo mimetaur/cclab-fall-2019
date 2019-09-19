@@ -1,0 +1,13 @@
+This example shows you how to read an analog input pin, map the result to a range from 0 to 255, use that result to set the pulse width modulation (PWM) of an output pin to dim or brighten an LED and print the values on the serial monitor of the Arduino Software (IDE).
+
+After declaring two pin assignments (analog 0 for our potentiometer and digital 9 for your LED) and two variables, sensorValue and outputValue, the only things that you do in the setup() function is to begin serial communication.
+
+Next, in the main loop, sensorValue is assigned to store the raw analog value read from the potentiometer. Arduino has an analogRead range from 0 to 1023, and an analogWrite range only from 0 to 255, therefore the data from the potentiometer needs to be converted to fit into the smaller range before using it to dim the LED.
+
+In order to convert this value, use a function called `map():`
+
+`outputValue = map(sensorValue, 0, 1023, 0, 255);`
+
+outputValue is assigned to equal the scaled value from the potentiometer. map() accepts five arguments: The value to be mapped, the low range and high values of the input data, and the low and high values for that data to be remapped to. In this case, the sensor data is mapped down from its original range of 0 to 1023 to 0 to 255.
+
+The newly mapped sensor data is then output to the analogOutPin dimming or brightening the LED as the potentiometer is turned. Finally, both the raw and scaled sensor values are sent to the Arduino Software (IDE) serial monitor window, in a steady stream of data.
