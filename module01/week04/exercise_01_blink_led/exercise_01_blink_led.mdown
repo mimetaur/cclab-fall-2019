@@ -1,0 +1,3 @@
+This example shows the simplest thing you can do with an Arduino to see physical output: it blinks an LED.
+
+Note: by using pin 13, we are blinking both the on-board LED and the connected LED. This is because the on-board LED is normaled to Pin 13 on most Arduinos.
