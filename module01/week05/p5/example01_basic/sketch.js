@@ -1,7 +1,11 @@
 // Declare a "SerialPort" object
 let serial;
-let latestData = "waiting for data";  // you'll use this to write incoming data to the canvas
+// let latestData = "waiting for data";  // you'll use this to write incoming data to the canvas
 let mySerialPort = "/dev/tty.usbmodem1451"
+
+let redVal = 255;
+let greenVal = 255;
+let blueVal = 255;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -42,11 +46,6 @@ function setup() {
   //serial.onOpen(gotOpen);
 
   serial.on('close', gotClose);
-
-  // Callback to get the raw data, as it comes in for handling yourself
-  //serial.on('rawdata', gotRawData);
-  // OR
-  //serial.onRawData(gotRawData);
 }
 
 // We are connected and ready to go
@@ -84,8 +83,16 @@ function gotData() {
   let currentString = serial.readLine();  // read the incoming string
   trim(currentString);                    // remove any trailing whitespace
   if (!currentString) return;             // if the string is empty, do no more
-  console.log(currentString);             // print the string
-  latestData = currentString;            // save it for the draw method
+
+  let currentVals = currentString.split(",");
+  let newVals = [];
+  for (i = 0; i < currentVals.length; i++) {
+    newVals[i] = round(map(currentVals[i], 0, 1023, 0, 255));
+  }
+  console.log(newVals);             // print the results once parsed
+  redVal = newVals[0];
+  greenVal = newVals[1];
+  blueVal = newVals[2];
 }
 
 // We got raw from the serial port
@@ -108,14 +115,6 @@ function gotRawData(thedata) {
 // serial.write(somevar) writes out the value of somevar to the serial device
 
 function draw() {
-  background(255, 255, 255);
+  background(redVal, greenVal, blueVal);
   fill(0, 0, 0);
-  text(latestData, 10, 10);
-  // Polling method
-  /*
-  if (serial.available() > 0) {
-  let data = serial.read();
-  ellipse(50,50,data,data);
-}
-*/
 }
