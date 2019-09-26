@@ -1,7 +1,6 @@
 // Declare a "SerialPort" object
 let serial;
-// let latestData = "waiting for data";  // you'll use this to write incoming data to the canvas
-let mySerialPort = "/dev/tty.usbmodem1451"
+let mySerialPort = "/dev/tty.usbmodem14101"
 
 let redVal = 255;
 let greenVal = 255;
