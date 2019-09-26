@@ -2,9 +2,13 @@
 let serial;
 let mySerialPort = "/dev/tty.usbmodem14101"
 
-let hueVal = 360;
-let satVal = 100;
-let brightVal = 100;
+let oldHueVal = 360;
+let oldSatVal = 100;
+let oldBrightVal = 100;
+
+let newHueVal = 360;
+let newSatVal = 100;
+let newBrightVal = 100;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -85,9 +89,14 @@ function gotData() {
   if (!currentString) return;             // if the string is empty, do no more
 
   let currentVals = currentString.split(",");
-  hueVal = round(map(currentVals[0], 0, 1023, 0, 360));
-  satVal = round(map(currentVals[1], 0, 1023, 0, 100));
-  brightVal = round(map(currentVals[2], 0, 1023, 0, 100));
+  let hueVal = round(map(currentVals[0], 0, 1023, 0, 360));
+  let satVal = round(map(currentVals[1], 0, 1023, 0, 100));
+  let brightVal = round(map(currentVals[2], 0, 1023, 0, 100));
+
+  let smoothAmount = 0.75;
+  newHueVal = lerp(oldHueVal, hueVal, smoothAmount);
+  newSatVal = lerp(oldSatVal, satVal, smoothAmount);
+  newBrightVal = lerp(oldBrightVal, brightVal, smoothAmount);
 }
 
 // We got raw from the serial port
@@ -110,6 +119,6 @@ function gotRawData(thedata) {
 // serial.write(somevar) writes out the value of somevar to the serial device
 
 function draw() {
-  background(hueVal, satVal, brightVal);
+  background(newHueVal, newSatVal, newBrightVal);
   fill(0, 0, 0);
 }
