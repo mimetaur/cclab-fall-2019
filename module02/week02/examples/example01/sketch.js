@@ -22,14 +22,8 @@ function draw() {
   // something similar to clicking on the API url
   print(weather);
 
-  let windAngle = weather.wind.deg;
-  let windSpeed = map(weather.wind.speed, 0, 100, 0, width);
-  let windGust = map(weather.wind.gust, 0, 100, 4, 10);
-
-  push();
-  translate(width / 2, height / 2);
-  rotate(windAngle);
-  strokeWeight(windGust);
-  line(0, 0, windSpeed, windSpeed);
-  pop();
+  // TODO
+  // 1. make some variables to store data from the API
+  // 2. remap some values to be more appropriate for pixels or colors
+  // 3. write the actual drawing code
 }
